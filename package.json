@@ -1,0 +1,16 @@
+{
+  "name": "attendance-monitoring",
+  "version": "1.0.0",
+  "description": "Attendance Monitoring System",
+  "main": "dist/main.js",
+  "type": "commonjs",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4",
+    "sql.js": "^1.13.0",
+    "xlsx": "^0.18.5"
+  }
+}
