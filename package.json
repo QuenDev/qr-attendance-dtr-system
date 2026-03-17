@@ -2,7 +2,7 @@
   "name": "attendance-monitoring",
   "version": "1.0.0",
   "description": "Attendance Monitoring System",
-  "main": "dist/main.js",
+  "main": "src/main.js",
   "type": "commonjs",
   "author": "",
   "license": "ISC",

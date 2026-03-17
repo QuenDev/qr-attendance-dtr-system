@@ -1,0 +1,65 @@
+:root {
+  /* Colors - Dark Palette */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #0f0f10;
+  --bg-tertiary: #1a1a1c;
+  --bg-card: linear-gradient(135deg, #1a1a1c 0%, #0f0f10 100%);
+  --bg-input: linear-gradient(180deg, #232325 0%, #1b1b1c 100%);
+  
+  /* Colors - Gold/Accent */
+  --accent-primary: #ffd54a;
+  --accent-secondary: #ffc107;
+  --accent-dark: #ffb300;
+  --accent-glow: rgba(255, 193, 7, 0.1);
+  --accent-border: rgba(255, 193, 7, 0.2);
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #cfcfcf;
+  --text-muted: #999999;
+  --text-dark: #0b0b0b;
+  
+  /* Semantic Colors */
+  --success: #4ade80;
+  --error: #e53935;
+  --warning: #ffa500;
+  --info: #4ac0e0;
+  
+  /* Status Colors */
+  --status-checked-in: rgba(76, 175, 80, 0.2);
+  --status-checked-in-text: #90ee90;
+  --status-late: rgba(255, 152, 0, 0.2);
+  --status-late-text: #ffb74d;
+  --status-half-day: rgba(156, 39, 176, 0.2);
+  --status-half-day-text: #ce93d8;
+  --status-absent: rgba(244, 67, 54, 0.2);
+  --status-absent-text: #ef9a9a;
+  --status-checkout: rgba(33, 150, 243, 0.2);
+  --status-checkout-text: #87ceeb;
+
+  /* Layout */
+  --sidebar-width: 200px;
+  --header-height: 70px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Shadow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.55);
+}
+
+/* Light Mode Overrides (if needed) */
+body.light-mode {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --accent-glow: rgba(0, 0, 0, 0.05);
+  --accent-border: rgba(0, 0, 0, 0.1);
+}

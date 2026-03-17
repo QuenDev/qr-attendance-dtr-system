@@ -1,0 +1,174 @@
+/* Employee Scanner specific styles extracted from employee.html */
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.scanner-box {
+  background: var(--bg-card);
+  border: 2px solid var(--accent-border);
+  border-radius: var(--border-radius-xl);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+#scanner {
+  width: 100%;
+  height: 300px;
+  border-radius: var(--border-radius-lg);
+  background: #000;
+  margin-bottom: 16px;
+  display: none;
+  object-fit: cover;
+}
+
+.scanner-placeholder {
+  width: 100%;
+  height: 300px;
+  border-radius: var(--border-radius-lg);
+  background: linear-gradient(135deg, #2a2a2c 0%, #1a1a1c 100%);
+  border: 2px dashed var(--accent-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.scanner-placeholder svg {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.status-message {
+  padding: 16px;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  display: none;
+}
+
+.status-success {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: var(--success);
+}
+
+.status-error {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: var(--error);
+}
+
+.member-info {
+  background: rgba(255, 213, 74, 0.1);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--border-radius-lg);
+  padding: 16px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.member-info.show {
+  display: block;
+}
+
+.member-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.badge-present { background: var(--status-checked-in); color: var(--status-checked-in-text); }
+.badge-late { background: var(--status-late); color: var(--status-late-text); }
+.badge-checked-in { background: var(--status-checkout); color: var(--status-checkout-text); }
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--border-radius);
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.current-time {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 4px;
+}
+
+.scanner-frame {
+  width: 250px;
+  height: 250px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--border-radius-lg);
+  position: relative;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+}
+
+.scanner-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 6px var(--accent-primary);
+  animation: scan 2s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes scan {
+  0% { top: 10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 90%; opacity: 0; }
+}

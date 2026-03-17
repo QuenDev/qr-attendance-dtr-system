@@ -15,12 +15,13 @@ A high-performance, **Local-First** Desktop Application for professional attenda
 - **Admin Management Portal**: Secure access control with `bcrypt` encryption, member management, and exportable reports (PDF/CSV).
 - **System Integrity**: Automated activity logs, user notifications, and a built-in backup utility to prevent data loss.
 
-## 🏗️ Architecture: Offline-First Reliability
+## 🏗️ Architecture: Modular & Layered
 
-Unlike traditional systems that rely on external SQL servers, this application implements a **custom flat-file JSON data persistence layer**. 
+The application has been refactored from a monolithic structure to a professional layered architecture in the `src/` directory.
 
-- **Reliable Offline Storage**: Engineered for environments where server connectivity is not guaranteed.
-- **Atomic-Write Operations**: Ensures high data integrity and prevents file corruption during simultaneous read/write cycles.
+- **Service Layer**: Decoupled business logic for Attendance, Members, Admins, and System concerns.
+- **IPC Handlers**: Modular communication modules that bridge the frontend and backend without cluttering the main process.
+- **Database Abstraction**: A custom JSON-based persistence layer with **Atomic-Write operations** and **In-Memory Caching** for high integrity and ultra-fast performance.
 - **Zero Configuration**: A portable, serverless architecture that runs natively on Windows without requiring database installation.
 
 ## 💻 Tech Stack
