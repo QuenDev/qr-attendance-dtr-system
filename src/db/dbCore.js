@@ -1,5 +1,6 @@
 const path = require('path');
 const { app } = require('electron');
+const fs = require('fs');
 
 // Cache to avoid redundant disk reads
 const cache = new Map();

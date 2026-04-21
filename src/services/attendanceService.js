@@ -1,15 +1,6 @@
 const { FILES, writeJSONAtomic, readJSON } = require('../db/dbCore');
 const memberService = require('./memberService');
-
-/**
- * Get local date YYYY-MM-DD
- */
-function getLocalDateYMD(date = new Date()) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-}
+const { getLocalDateYMD } = require('../shared/utils');
 
 function getAttendanceByDate(date) {
     const attendance = readJSON(FILES.ATTENDANCE);
@@ -17,7 +8,7 @@ function getAttendanceByDate(date) {
 }
 
 function getAttendanceByMember(memberId, startDate, endDate) {
-    let records = readJSON(FILES.ATTENDANCE).filter(a => a.member_id === memberId);
+    let records = readJSON(FILES.ATTENDANCE).filter(a => String(a.member_id) === String(memberId));
     if (startDate) records = records.filter(a => a.date >= startDate);
     if (endDate) records = records.filter(a => a.date <= endDate);
     return records;
@@ -120,6 +111,7 @@ function checkOut(memberId) {
 function getTodayAttendanceSummary() {
     const today = getLocalDateYMD();
     const todayAttendance = getAttendanceByDate(today);
+    const allMembers = memberService.getAllMembers();
     
     const checkedInMembers = new Set();
     todayAttendance.forEach(a => {
@@ -132,7 +124,9 @@ function getTodayAttendanceSummary() {
 
     return {
         date: today,
-        checked_in_count: checkedInMembers.size,
+        total_members: allMembers.length,
+        checked_in: checkedInMembers.size,
+        checked_in_count: checkedInMembers.size, // backward compatibility
         still_checked_in: stillCheckedIn,
         records: todayAttendance
     };
@@ -164,6 +158,20 @@ function getCurrentlyCheckedIn() {
     const today = getLocalDateYMD();
     const records = readJSON(FILES.ATTENDANCE);
     return records.filter(r => r.date === today && r.sessions.some(s => s.check_in && !s.check_out));
+}
+
+function getMemberActiveSession(memberId) {
+    const today = getLocalDateYMD();
+    const records = readJSON(FILES.ATTENDANCE);
+    const record = records.find(r => String(r.member_id) === String(memberId) && r.date === today);
+    if (!record) return null;
+    return record.sessions.find(s => s.check_in && !s.check_out) || null;
+}
+
+function getMemberAttendanceToday(memberId) {
+    const today = getLocalDateYMD();
+    const records = readJSON(FILES.ATTENDANCE);
+    return records.find(r => String(r.member_id) === String(memberId) && r.date === today) || null;
 }
 
 function markAbsentForDay(date) {
@@ -288,6 +296,8 @@ module.exports = {
     getMonthlyAttendanceTrends,
     getTopAttendees,
     getCurrentlyCheckedIn,
+    getMemberActiveSession,
+    getMemberAttendanceToday,
     markAbsentForDay,
     getDTRByDateRange,
     autoCloseAttendance

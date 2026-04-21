@@ -12,6 +12,9 @@ let mainWindow = null;
 let dashboardWindow = null;
 let employeeScannerWindow = null;
 
+// Common web preferences
+const commonWebPrefs = { nodeIntegration: true, contextIsolation: false };
+
 // Force single instance
 if (!app.requestSingleInstanceLock()) {
     app.quit();
@@ -73,7 +76,7 @@ function createWindow() {
         width: 1000,
         height: 700,
         icon: path.join(__dirname, '../assets/icons/dtr.ico'),
-        webPreferences: { nodeIntegration: true, contextIsolation: false }
+        webPreferences: commonWebPrefs
     });
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
 }
@@ -82,7 +85,7 @@ function createDashboard() {
     dashboardWindow = new BrowserWindow({
         width: 1200,
         height: 800,
-        webPreferences: { nodeIntegration: true, contextIsolation: false }
+        webPreferences: commonWebPrefs
     });
     dashboardWindow.loadFile(path.join(__dirname, '../renderer/dashboard.html'));
 }
@@ -91,7 +94,7 @@ function createEmployeeScanner() {
     employeeScannerWindow = new BrowserWindow({
         width: 600,
         height: 900,
-        webPreferences: { nodeIntegration: true, contextIsolation: false }
+        webPreferences: commonWebPrefs
     });
     employeeScannerWindow.loadFile(path.join(__dirname, '../renderer/employee.html'));
 }

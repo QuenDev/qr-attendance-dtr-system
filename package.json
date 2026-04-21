@@ -4,6 +4,9 @@
   "description": "Attendance Monitoring System",
   "main": "src/main.js",
   "type": "commonjs",
+  "scripts": {
+    "start": "electron ."
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

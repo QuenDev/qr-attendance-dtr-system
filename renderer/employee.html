@@ -4,10 +4,364 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Qr Scanner</title>
-  <link rel="stylesheet" href="theme.css">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="employee.css">
-</head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      color: #fff;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 193, 7, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffd54a;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #999;
+      margin: 0;
+    }
+
+    .scanner-box {
+      background: linear-gradient(135deg, #1a1a1c 0%, #0f0f10 100%);
+      border: 2px solid rgba(255, 193, 7, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #scanner {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      background: #000;
+      margin-bottom: 16px;
+      display: none;
+      object-fit: cover;
+    }
+
+    .scanner-placeholder {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2a2a2c 0%, #1a1a1c 100%);
+      border: 2px dashed rgba(255, 193, 7, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #666;
+    }
+
+    .scanner-placeholder svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .info-text {
+      font-size: 12px;
+      color: #999;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ffd54a 0%, #ffb300 100%);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(255, 213, 74, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 213, 74, 0.1);
+      color: #ffd54a;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 213, 74, 0.15);
+      border-color: rgba(255, 193, 7, 0.5);
+    }
+
+    .status-message {
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+    }
+
+    .status-success {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      color: #4ade80;
+    }
+
+    .status-error {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      color: #ff6b6b;
+    }
+
+    .status-warning {
+      background: rgba(255, 165, 0, 0.1);
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      color: #ffa500;
+    }
+
+    .status-info {
+      background: rgba(74, 192, 224, 0.1);
+      border: 1px solid rgba(74, 192, 224, 0.3);
+      color: #4ac0e0;
+    }
+
+    .member-info {
+      background: linear-gradient(135deg, rgba(255, 213, 74, 0.1) 0%, rgba(255, 213, 74, 0.05) 100%);
+      border: 1px solid rgba(255, 193, 7, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .member-info.show {
+      display: block;
+    }
+
+    .member-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffd54a;
+      margin-bottom: 8px;
+    }
+
+    .member-detail {
+      font-size: 13px;
+      color: #cfcfcf;
+      margin: 4px 0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    .badge-present {
+      background: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+    }
+
+    .badge-late {
+      background: rgba(255, 165, 0, 0.2);
+      color: #ffa500;
+    }
+
+    .badge-checked-in {
+      background: rgba(74, 192, 224, 0.2);
+      color: #4ac0e0;
+    }
+
+    .badge-checked-out {
+      background: rgba(150, 130, 230, 0.2);
+      color: #9682e6;
+    }
+
+    .manual-input {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 193, 7, 0.1);
+    }
+
+    .manual-input label {
+      display: block;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #qrInput {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #232325 0%, #1b1b1c 100%);
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    #qrInput:focus {
+      outline: none;
+      border-color: rgba(255, 193, 7, 0.6);
+      box-shadow: 0 0 8px rgba(255, 193, 7, 0.2);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #1a1a1c 0%, #0f0f10 100%);
+      border: 1px solid rgba(255, 193, 7, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffd54a;
+    }
+
+    .time-display {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .current-time {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffd54a;
+      margin-bottom: 4px;
+    }
+
+    .current-date {
+      font-size: 13px;
+      color: #999;
+    }
+    .scanner-wrapper {
+      position: relative;
+      display: none;
+      width: 100%;
+      height: 300px;
+    }
+    .scanner-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .scanner-frame {
+      width: 250px;
+      height: 250px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+    }
+    .scanner-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #ffd54a;
+      box-shadow: 0 0 6px #ffd54a;
+      animation: scan 2s linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes scan {
+      0% { top: 10%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 90%; opacity: 0; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -89,7 +443,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-    <script src="utils.js"></script>
     <script src="../dist/renderer/employee.js"></script>
 </body>
 </html>

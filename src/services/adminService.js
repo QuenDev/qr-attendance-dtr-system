@@ -1,4 +1,4 @@
-const { FILES, writeJSONAtomic, readJSON } = require('./dbCore');
+const { FILES, writeJSONAtomic, readJSON } = require('../db/dbCore');
 const bcryptjs = require('bcryptjs');
 
 function getAllAdmins() {

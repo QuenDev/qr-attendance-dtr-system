@@ -34,11 +34,24 @@ function registerAttendanceHandlers() {
         return { success: true, records: attendanceService.getAttendanceByMember(memberId, start, end) };
     });
 
+    ipcMain.handle('get-member-attendance', async (event, memberId) => {
+        return { success: true, attendance: attendanceService.getMemberAttendanceToday(memberId) };
+    });
+
     ipcMain.handle('get-today-summary', async () => ({ success: true, summary: attendanceService.getTodayAttendanceSummary() }));
 
-    ipcMain.handle('get-day-stats', async (event, date) => {
+    ipcMain.handle('get-day-stats', async (event, memberId) => {
         const summary = attendanceService.getTodayAttendanceSummary();
-        return { success: true, stats: { check_ins: summary.checked_in_count, active_members: summary.still_checked_in } };
+        const activeSession = attendanceService.getMemberActiveSession(memberId);
+        return { 
+            success: true, 
+            stats: { 
+                check_ins: summary.checked_in_count, 
+                active_members: summary.still_checked_in,
+                active: !!activeSession,
+                session: activeSession
+            } 
+        };
     });
 
     ipcMain.handle('get-monthly-trends', async () => ({ success: true, trends: attendanceService.getMonthlyAttendanceTrends() }));

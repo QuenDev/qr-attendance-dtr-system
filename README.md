@@ -54,10 +54,35 @@ The system features a **state-of-the-art dark theme** inspired by modern glassmo
    npm start
    ```
 
+## � Usage Guide
+
+### For Administrators:
+- **Login**: Use the default credentials (admin/admin123) on first run. Change the password immediately in Settings.
+- **Add Members**: Navigate to the Members section, enter names, and generate QR codes.
+- **Monitor Attendance**: View real-time dashboard with check-ins, trends, and reports.
+- **Export Data**: Generate CSV/PDF reports from the Reports section.
+
+### For Employees/Kiosk Mode:
+- **Check-In/Out**: Scan QR code via the Employee Scanner window for instant attendance logging.
+- **Session Handling**: Supports AM/PM sessions with automatic time-out calculations.
+
+### System Requirements:
+- **OS**: Windows 10/11
+- **RAM**: 2GB minimum (4GB recommended)
+- **Storage**: 100MB free space
+- **Camera**: Required for QR scanning (built-in or external webcam)
+
+## 🔒 Security & Best Practices
+
+- **Local-Only**: Designed for internal use; data stays on the device.
+- **Encryption**: Admin passwords are hashed with bcrypt.
+- **Backups**: Regularly export data to prevent loss.
+- **Updates**: Pull latest changes from GitHub for bug fixes.
+
 ## 📧 Contact & Support
 
 **Developer**: Quenedy Pabular  
 **Email**: [quenedypabular12@gmail.com](mailto:quenedypabular12@gmail.com)
 
 ---
-*Created with passion for efficient workforce management.*
+*Created with passion for efficient workforce management. Ideal for small organizations (up to 50 members) in kiosk or single-user setups.*
